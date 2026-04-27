@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Access Restricted | Massillon City Schools</title>
+    <style>
+        :root { --m-orange: #FF6600; --m-black: #000000; }
+        body { font-family: 'Segoe UI', sans-serif; background: #1a1a1a; display: flex; align-items: center; justify-content: center; min-height: 100vh; margin: 0; }
+        .card { background: white; width: 100%; max-width: 550px; border-radius: 15px; overflow: hidden; border-top: 10px solid var(--m-orange); box-shadow: 0 20px 40px rgba(0,0,0,0.5); text-align: center; }
+        .header { background: var(--m-black); padding: 30px; color: white; }
+        .logo { font-size: 2.5rem; font-weight: 900; color: var(--m-orange); letter-spacing: 2px; }
+        .content { padding: 30px; }
+        .info-box { background: #f4f4f4; border-radius: 10px; padding: 15px; text-align: left; font-size: 0.8rem; margin-bottom: 20px; }
+        .info-row { display: flex; border-bottom: 1px solid #ddd; padding: 5px 0; }
+        .label { font-weight: bold; width: 100px; color: #666; text-transform: uppercase; }
+        .val { color: #000; font-family: monospace; word-break: break-all; font-weight: bold; }
+        .btn { display: block; width: 100%; padding: 15px; background: var(--m-orange); color: white; text-decoration: none; border-radius: 50px; font-weight: bold; text-transform: uppercase; }
+    </style>
+</head>
+<body>
+
+<div class="card">
+    <div class="header">
+        <div class="logo">MASSILLON</div>
+        <div style="letter-spacing: 2px; font-size: 0.8rem; color: #aaa;">CITY SCHOOL DISTRICT</div>
+    </div>
+    <div class="content">
+        <h2 style="margin-top:0; color:#000;">Access Restricted</h2>
+        <div class="info-box">
+            <div class="info-row"><span class="label">URL:</span><span class="val" id="d-url">Loading...</span></div>
+            <div class="info-row"><span class="label">Category:</span><span class="val" id="d-reason">Loading...</span></div>
+            <div class="info-row"><span class="label">User:</span><span class="val" id="d-user">Loading...</span></div>
+            <div class="info-row"><span class="label">IP:</span><span class="val" id="d-ip">Loading...</span></div>
+            <div class="info-row"><span class="label">Time:</span><span class="val" id="d-time">Loading...</span></div>
+        </div>
+        <a href="javascript:history.back()" class="btn">Return to Safety</a>
+    </div>
+</div>
+
+<script>
+    // This is the specific listener for Deledao Remote Block Pages
+    window.addEventListener("message", function(event) {
+        if (event.data && event.data.type === "deledao_block_info") {
+            const info = event.data.info;
+            document.getElementById('d-url').textContent = info.url || "N/A";
+            document.getElementById('d-reason').textContent = info.reason || "Policy Violation";
+            document.getElementById('d-user').textContent = info.userEmail || "MCS User";
+            document.getElementById('d-ip').textContent = info.clientIp || "Internal";
+            document.getElementById('d-time').textContent = new Date().toLocaleString();
+        }
+    }, false);
+</script>
+
+</body>
+</html>
